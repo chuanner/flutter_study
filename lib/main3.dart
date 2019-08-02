@@ -2,6 +2,50 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(new MyApp());
 
+class FavoriteWidget extends StatefulWidget {
+  @override
+  _FavoriteWidgetState createState() => _FavoriteWidgetState();
+}
+
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+  bool _isFavorited = true;
+  int _favoriteCount = 41;
+  void _toggleFavorite() {
+    setState(() {
+      if(_isFavorited){
+        _favoriteCount -= 1;
+        _isFavorited = false;
+      } else {
+        _favoriteCount += 1;
+        _isFavorited = true;
+      }
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return new Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        new Container(
+          padding: new EdgeInsets.all(0.0),
+          child: new IconButton(
+              icon: (_isFavorited ? new Icon(Icons.star) : new Icon(Icons.star_border)),
+              color: Colors.red[500],
+              onPressed: _toggleFavorite),
+        ),
+        new SizedBox(
+          width: 18.0,
+          child: new Container(
+            child: new Text('$_favoriteCount'), //字符串模板
+          ),
+        )
+
+      ],
+    );
+  }
+}
+
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,12 +59,12 @@ class MyApp extends StatelessWidget {
           new Container(
             margin: const EdgeInsets.only(top: 8.0),
             child: new Text(
-              label,
-              style: new TextStyle(
-                fontSize: 12.0,
-                fontWeight: FontWeight.w400,
-                color: color
-              )
+                label,
+                style: new TextStyle(
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w400,
+                    color: color
+                )
             ),
           )
         ],
@@ -53,11 +97,7 @@ class MyApp extends StatelessWidget {
               ],
             ),
           ),
-          new Icon(
-            Icons.star,
-            color: Colors.red[500],
-          ),
-          new Text('41'),
+          new FavoriteWidget(),
         ],
       ),
     );
@@ -86,7 +126,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: "flutter",
       theme:
-          new ThemeData(primaryColor: Colors.blue, primarySwatch: Colors.blue),
+      new ThemeData(primaryColor: Colors.blue, primarySwatch: Colors.blue),
       home: new Scaffold(
         appBar: new AppBar(
           title: new Text("flutter"),
@@ -101,7 +141,7 @@ class MyApp extends StatelessWidget {
               width: 600.0,
               height: 240.0,
               fit: BoxFit.cover,
-              ),
+            ),
             titleSection,
             buttonSection,
             textSection
@@ -111,3 +151,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
